@@ -1,26 +1,27 @@
 package main
 
 import (
-    "database/sql"
-    "log"
+	"database/sql"
+	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
-    DBUser     = "your_username"
-    DBPassword = "your_password"
-    DBName     = "your_database_name"
+	DBUser     = "root"
+	DBPassword = "root"
+	DBName     = "shajhya"
 )
 
 func GetDSN() string {
-    return DBUser + ":" + DBPassword + "@/" + DBName
+	return DBUser + ":" + DBPassword + "@/" + DBName
 }
 
 func connectToDB() (*sql.DB, error) {
-    db, err := sql.Open("mysql", GetDSN())
-    if err != nil {
-        log.Fatal(err)
-        return nil, err
-    }
-    return db, nil
+	db, err := sql.Open("mysql", GetDSN())
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+	return db, nil
 }
-
