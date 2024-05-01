@@ -11,6 +11,7 @@ func (app *application) routes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Get("/", app.CreateUserTable)
+	mux.Get("/hello", app.Hello)
 
 	return mux
 

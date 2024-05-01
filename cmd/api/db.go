@@ -1,14 +1,16 @@
 package main
 
 import (
-    "database/sql"
-    "log"
+	"database/sql"
+	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
-    DBUser     = "your_username"
-    DBPassword = "your_password"
-    DBName     = "your_database_name"
+    DBUser     = "root"
+    DBPassword = ""
+    DBName     = "shajhya"
 )
 
 func GetDSN() string {
