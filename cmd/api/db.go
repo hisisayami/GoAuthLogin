@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	DBUser     = "root"
-	DBPassword = "root"
+	DBUser     = "shajhya"
+	DBPassword = "shajhya"
 	DBName     = "shajhya"
 )
 
