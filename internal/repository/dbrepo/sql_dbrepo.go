@@ -7,7 +7,7 @@ import (
 	"goauthlogin/internal/models"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
+	//"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -15,7 +15,7 @@ type User struct {
 	FirstName string    `json:"firstname"`
 	LastName  string    `json:"lastname"`
 	UserName  string    `json:"username"`
-	Password  string    `json:"password"`
+	//Password  string    `json:"password"`
 	Access    bool      `json:"access"`
 	Phone     int       `json:"phone"`
 	CreatedAt time.Time `json:"-"`
@@ -39,8 +39,7 @@ func (m *SqlDBRepo) CreateUserTable() error {
             email VARCHAR(255) NOT NULL,
             username VARCHAR(255) NOT NULL,
             access INT NOT NULL,
-            phone VARCHAR(20) NOT NULL,
-            password VARCHAR(255) NOT NULL
+            phone VARCHAR(20) NOT NULL
         )
     `)
 	if err != nil {
@@ -53,7 +52,7 @@ func (m *SqlDBRepo) GetUserName(username string) (*models.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 
-	query := `select id, FirstName, LastName, UserName, Password, Access, Phone 
+	query := `select id, FirstName, LastName, UserName, Access, Phone 
 	from users where username = ?`
 
 	var user models.User
@@ -70,7 +69,6 @@ func (m *SqlDBRepo) GetUserName(username string) (*models.User, error) {
 		&user.FirstName,
 		&user.LastName,
 		&user.UserName,
-		&user.Password,
 		&user.Access,
 		&user.Phone,
 	)
@@ -89,11 +87,11 @@ func (m *SqlDBRepo) GetUserName(username string) (*models.User, error) {
 // CreateUser inserts a new user record into the database
 func (m *SqlDBRepo) CreateUser(user *models.User) error {
 	// Hash the user's password before storing it in the database
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-	user.Password = string(hashedPassword)
+	// hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	// if err != nil {
+	// 	return err
+	// }
+	// user.Password = string(hashedPassword)
 
 	//Set the created_at and updated_at timestamps
 	now := time.Now()
@@ -101,10 +99,10 @@ func (m *SqlDBRepo) CreateUser(user *models.User) error {
 	user.UpdatedAt = now
 
 	// Execute the SQL query to insert the user into the database
-	_, err = m.DB.Exec(`
-        INSERT INTO users (firstname, lastname, username, password, access, phone)
+	_, err := m.DB.Exec(`
+        INSERT INTO users (firstname, lastname, username, access, phone)
         VALUES (?, ?, ?, ?, ?, ?)
-    `,  user.FirstName, user.LastName, user.UserName, user.Password, user.Access, user.Phone)
+    `,  user.FirstName, user.LastName, user.UserName, user.Access, user.Phone)
 	if err != nil {
 		return err
 	}

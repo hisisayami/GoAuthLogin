@@ -1,10 +1,10 @@
 package models
 
 import (
-	"errors"
+	//"errors"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
+	//"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -12,7 +12,7 @@ type User struct {
 	FirstName string    `json:"firstname"`
 	LastName  string    `json:"lastname"`
 	UserName  string    `json:"username"`
-	Password  string    `json:"password"`
+	//Password  string    `json:"password"`
 	Access    bool      `json:"access"`
 	Phone     int       `json:"phone"`
 	CreatedAt time.Time `json:"-"`
@@ -25,17 +25,17 @@ type LoginResponse struct {
     Success bool   `json:"success"`
 }
 
-func (u *User) PasswordMatches(plainText string) (bool, error) {
-	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(plainText))
-	if err != nil {
-		switch {
-		case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
-			//invalid password
-			return false, nil
-		default:
-			return false, err
-		}
-	}
+// func (u *User) PasswordMatches(plainText string) (bool, error) {
+// 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(plainText))
+// 	if err != nil {
+// 		switch {
+// 		case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
+// 			//invalid password
+// 			return false, nil
+// 		default:
+// 			return false, err
+// 		}
+// 	}
 
-	return true, nil
-}
+// 	return true, nil
+// }
