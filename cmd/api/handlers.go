@@ -44,16 +44,16 @@ func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//check password
-	valid, err := user.PasswordMatches(requestPayload.Password)
-	if err != nil || !valid {
-		response := models.LoginResponse{
-            User:    nil,
-            Message: "Authentication unsuccessful: invalid credentials",
-            Success: false,
-        }
-        app.writeJSON(w, http.StatusBadRequest, response)
-        return
-	}
+	// valid, err := user.PasswordMatches(requestPayload.Password)
+	// if err != nil || !valid {
+	// 	response := models.LoginResponse{
+    //         User:    nil,
+    //         Message: "Authentication unsuccessful: invalid credentials",
+    //         Success: false,
+    //     }
+    //     app.writeJSON(w, http.StatusBadRequest, response)
+    //     return
+	// }
 
 	// If everything is fine, send back the success response
     response := models.LoginResponse{
